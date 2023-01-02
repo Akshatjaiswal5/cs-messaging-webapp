@@ -97,6 +97,13 @@
 
   background-color: white;
 }
+
+.message-bubble {
+  margin-top: 2px;
+}
+.user-msg {
+  background-color: aqua;
+}
 .chat-panel {
   border: 1px solid black;
   display: grid;

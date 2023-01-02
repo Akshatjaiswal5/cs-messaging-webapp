@@ -5,21 +5,20 @@ import Login from "./components/Login";
 import UserChat from "./components/UserChat";
 
 function App() {
-  const [userType, setUserType] = useState({});
-  const [userId, setUserId] = useState({});
+  const [userType, setUserType] = useState("");
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    let storedUser = JSON.parse(window.sessionStorage.getItem("user")) ?? {};
+    let storedUser = window.sessionStorage.getItem("id");
     let storedUserType = window.sessionStorage.getItem("userType");
     setUserId(storedUser);
     setUserType(storedUserType);
   }, []);
-
+  console.log(userId);
+  console.log(userType);
   return (
     <div className="App">
-      {(Object.keys(userId).length === 0 && (
-        <Login setUser={setUserId} setUserType={setUserType} />
-      )) ||
+      {(!userId && <Login setUser={setUserId} setUserType={setUserType} />) ||
         (userType == "user" ? (
           <UserChat
             user={userId}

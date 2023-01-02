@@ -15,15 +15,9 @@ const UserChat = (props) => {
   const [newMessage, setNewMessage] = useState("");
   const [receivedMessage, setReceivedMessage] = useState("");
   useEffect(() => {
-    login();
     getMessages();
     socketIO();
   }, []);
-
-  async function login() {
-    const chat = await loginWithUser(props.user);
-    setChatId(chat.id);
-  }
 
   async function socketIO() {
     socket = io(API_URL);
@@ -44,7 +38,9 @@ const UserChat = (props) => {
   }, [receivedMessage]);
 
   async function getMessages() {
-    var messageArray = await getAllMessagesById(props.user);
+    const chat = await loginWithUser(props.user);
+    setChatId(chat.id);
+    var messageArray = await getAllMessagesById(parseInt(chat.id));
     setMessages(messageArray);
   }
 

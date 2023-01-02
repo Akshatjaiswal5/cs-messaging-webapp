@@ -4,9 +4,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
-
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 mongoose.connect(process.env.URI, { useNewUrlParser: true });
 const connection = mongoose.connection;
@@ -20,6 +19,7 @@ const server = app.listen(5000, () => {
 const io = require("socket.io")(server, {
   cors: process.env.DEPLOYED_URL || "127.0.0.1",
 });
+
 const usersRouter = require("./routes/users");
 const chatsRouter = require("./routes/chats")(io);
 const agentsRouter = require("./routes/agent");

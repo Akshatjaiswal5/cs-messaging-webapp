@@ -10,6 +10,8 @@ const Login = ({ setUser, setUserType }) => {
           e.preventDefault();
           setUser(enteredUser);
           setUserType(enteredUserType);
+          window.sessionStorage.setItem("id", enteredUser);
+          window.sessionStorage.setItem("userType", enteredUserType);
         }}
       >
         <div className="form-element">
