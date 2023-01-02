@@ -46,7 +46,21 @@ const UserChat = (props) => {
 
   return (
     <div className="userchat">
-      <div className="userchat-title">Support:User Id={props.user}</div>
+      <div className="userchat-title">
+        <div>Support</div>
+        <div>
+          <button
+            onClick={() => {
+              props.setUser("");
+              props.setUserType("");
+              window.sessionStorage.setItem("id", "");
+              window.sessionStorage.setItem("userType", "");
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
       <div className="messages">
         {messages &&
           messages.slice(0).map((m) => {

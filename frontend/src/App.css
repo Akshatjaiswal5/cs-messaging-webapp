@@ -89,7 +89,8 @@
 }
 .userchat-title {
   display: grid;
-  place-items: center;
+  place-items: start end;
+  grid-template-columns: 1fr 1fr;
 }
 
 .messages {
