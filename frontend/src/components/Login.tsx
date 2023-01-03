@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Login = ({ setUser, setUserType }) => {
+const Login = (props) => {
   const [enteredUser, setEnteredUser] = useState("");
   const [enteredUserType, setEnteredUserType] = useState("user");
   return (
@@ -8,8 +8,8 @@ const Login = ({ setUser, setUserType }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setUser(enteredUser);
-          setUserType(enteredUserType);
+          props.setId(enteredUser);
+          props.setUserType(enteredUserType);
           window.sessionStorage.setItem("id", enteredUser);
           window.sessionStorage.setItem("userType", enteredUserType);
         }}

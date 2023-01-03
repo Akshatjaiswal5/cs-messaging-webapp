@@ -5,7 +5,8 @@ console.log("API_URL", API_URL);
 export const loginWithUser = async (id) => {
   try {
     const response = await axios.post(API_URL + "/users/login/" + id);
-    console.log("response  ", response);
+    console.log("response issssss ", response);
+
     return response.data || {};
   } catch (error) {
     console.log(error);

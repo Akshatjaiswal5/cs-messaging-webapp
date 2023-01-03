@@ -1,36 +1,37 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import AgentChat from "./components/AgentChat";
+import AgentDashBoard from "./components/AgentDashBoard";
 import Login from "./components/Login";
-import UserChat from "./components/UserChat";
+import ChatBox from "./components/ChatBox";
 
 function App() {
   const [userType, setUserType] = useState("");
-  const [userId, setUserId] = useState("");
+  const [id, setId] = useState("");
 
   useEffect(() => {
     let storedUser = window.sessionStorage.getItem("id");
     let storedUserType = window.sessionStorage.getItem("userType");
-    setUserId(storedUser);
+    setId(storedUser);
     setUserType(storedUserType);
   }, []);
-  console.log(userId);
-  console.log(userType);
+
+  function logout() {
+    setId("");
+    setUserType("");
+    window.sessionStorage.setItem("id", "");
+    window.sessionStorage.setItem("userType", "");
+  }
+
   return (
     <div className="App">
-      {(!userId && <Login setUser={setUserId} setUserType={setUserType} />) ||
+      {(!id && <Login setId={setId} setUserType={setUserType} />) ||
         (userType == "user" ? (
-          <UserChat
-            user={userId}
-            userType={userType}
-            setUser={setUserId}
-            setUserType={setUserType}
-          />
+          <ChatBox id={id} userType={userType} logout={logout} />
         ) : (
-          <AgentChat
-            user={userId}
+          <AgentDashBoard
+            id={id}
             userType={userType}
-            setUser={setUserId}
+            setId={setId}
             setUserType={setUserType}
           />
         ))}

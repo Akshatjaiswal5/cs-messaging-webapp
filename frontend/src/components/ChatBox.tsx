@@ -2,30 +2,41 @@ import { useEffect, useState } from "react";
 import { sendMessage, getAllMessagesById } from "../utils/chat";
 import { loginWithUser } from "../utils/user";
 import io from "socket.io-client";
-import Login from "./Login";
 
-//var API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+var API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
 
-var API_URL = "http://127.0.0.1:5000";
 var socket;
 
-const UserChat = (props) => {
+const ChatBox = (props) => {
   const [chatId, setChatId] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [receivedMessage, setReceivedMessage] = useState("");
+
+  //all useEffects
   useEffect(() => {
     getMessages();
     socketIO();
   }, []);
 
+  useEffect(() => {
+    setMessages([...messages, receivedMessage]);
+  }, [receivedMessage]);
+
+  //helper functions
+  async function getMessages() {
+    const chat = await loginWithUser(props.id);
+    setChatId(chat.id);
+    var messageArray = await getAllMessagesById(parseInt(chat.id));
+    setMessages(messageArray);
+  }
   async function socketIO() {
     socket = io(API_URL);
     socket.on("connect", () => {
       console.log("socket connected", socket.id);
     });
 
-    socket.emit("join_chat", props.user);
+    socket.emit("join_chat", props.id);
 
     socket.on("new_message", (message) => {
       console.log("you've got mail");
@@ -33,32 +44,12 @@ const UserChat = (props) => {
     });
   }
 
-  useEffect(() => {
-    setMessages([...messages, receivedMessage]);
-  }, [receivedMessage]);
-
-  async function getMessages() {
-    const chat = await loginWithUser(props.user);
-    setChatId(chat.id);
-    var messageArray = await getAllMessagesById(parseInt(chat.id));
-    setMessages(messageArray);
-  }
-
   return (
     <div className="userchat">
       <div className="userchat-title">
         <div>Support</div>
         <div>
-          <button
-            onClick={() => {
-              props.setUser("");
-              props.setUserType("");
-              window.sessionStorage.setItem("id", "");
-              window.sessionStorage.setItem("userType", "");
-            }}
-          >
-            Logout
-          </button>
+          <button onClick={() => props.logout()}>Logout</button>
         </div>
       </div>
       <div className="messages">
@@ -87,7 +78,7 @@ const UserChat = (props) => {
         />
         <button
           onClick={() => {
-            sendMessage(props.userType, props.user, chatId, newMessage);
+            sendMessage(props.userType, props.id, chatId, newMessage);
             setNewMessage("");
           }}
         >
@@ -98,4 +89,4 @@ const UserChat = (props) => {
   );
 };
 
-export default UserChat;
+export default ChatBox;
