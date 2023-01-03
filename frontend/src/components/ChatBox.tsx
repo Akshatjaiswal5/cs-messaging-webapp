@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { useEffect, useState } from "react";
 import { sendMessage, getAllMessagesById } from "../utils/chat";
 import { loginWithUser } from "../utils/user";
