@@ -122,6 +122,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   place-items: center;
+  gap: 3rem;
 }
 .user-requests {
   background-color: whitesmoke;

@@ -25,10 +25,8 @@ const AgentDashBoard = (props) => {
     setAllChats(chats);
     const msgs = await getAllMessages();
     setAllMessages(msgs);
-
-    console.log(msgs);
   }
-
+  console.log("allc:", allChats);
   return (
     <div className="agent-dashboard">
       <div className="user-requests">
@@ -44,12 +42,11 @@ const AgentDashBoard = (props) => {
               console.log(chat);
               return {
                 id: chat.id,
-                user: chat.senderId,
                 mine: myChats.includes(chat.id),
                 assigned: chat.assigned,
                 message: allMessages.filter((m) => {
                   return chat.id == m.chatId;
-                })[0]?.message,
+                })[0],
               };
             })
             .filter((msg) => msg?.message)
@@ -57,7 +54,7 @@ const AgentDashBoard = (props) => {
               return (
                 <Chat
                   key={msg.id}
-                  user={msg.user}
+                  user={msg.message.senderId}
                   id={msg.id}
                   mine={msg.mine}
                   assigned={msg.assigned}
@@ -68,7 +65,13 @@ const AgentDashBoard = (props) => {
         </div>
       </div>
       <div>
-        {selectedUser && <UserChat id={selectedUser} logout={logoutFromUser} />}
+        {selectedUser && (
+          <UserChat
+            id={selectedUser}
+            userType={"agent"}
+            logout={logoutFromUser}
+          />
+        )}
       </div>
     </div>
   );
@@ -77,7 +80,7 @@ const AgentDashBoard = (props) => {
     return (
       <div className="chat-item">
         <div>[{id}]</div>
-        <div>{msg}</div>
+        <div>{msg.message}</div>
         <div>
           <button
             disabled={assigned && !mine}
