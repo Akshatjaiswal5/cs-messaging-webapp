@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(cors());
 app.use(express.json());
+mongoose.set("strictQuery", true);
 
 mongoose.connect(process.env.URI, { useNewUrlParser: true });
 const connection = mongoose.connection;
@@ -13,7 +14,7 @@ connection.once("open", () => {
   console.log("MongoDB connected");
 });
 
-const server = app.listen(5000, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
   console.log("Server on");
 });
 const io = require("socket.io")(server, {
