@@ -28,12 +28,7 @@ function App() {
         (userType == "user" ? (
           <ChatBox id={id} userType={userType} logout={logout} />
         ) : (
-          <AgentDashBoard
-            id={id}
-            userType={userType}
-            setId={setId}
-            setUserType={setUserType}
-          />
+          <AgentDashBoard id={id} logout={logout} />
         ))}
     </div>
   );

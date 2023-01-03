@@ -1,5 +1,5 @@
 import axios from "axios";
-var API_URL = import.meta.env.VITE_API_URL;
+var API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
 
 export const getAgentById = async (id) => {
   try {
@@ -10,11 +10,12 @@ export const getAgentById = async (id) => {
   }
 };
 
-export const getAllAgents = async () => {
+export const loginWithAgent = async (id) => {
   try {
-    const response = await axios.get(API_URL + "/agents/");
-    console.log("response  ", response);
-    return response.data;
+    const response = await axios.post(API_URL + "/agents/login/" + id);
+    console.log("response is ", response);
+
+    return response.data || {};
   } catch (error) {
     console.log(error);
   }

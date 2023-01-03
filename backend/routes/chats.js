@@ -17,19 +17,25 @@ const chatsRouter = (io) => {
   });
 
   router.route("/assign/:id").post((req, res) => {
-    Chat.findOne({ id: req.params.id })
-      .then((chat) => {
-        chat.active = true;
-        chat.save().catch((err) => res.status(400).json("Error: " + err));
-      })
-      .catch((err) => res.status(400).json("Error: " + err));
+    Chat.findOneAndUpdate(
+      { id: req.params.id },
+      { assigned: true },
+      { returnOriginal: false }
+    ).catch((err) => res.status(400).json("Error: " + err));
 
-    Agent.findOne({ id: req.body.agentId })
+    Agent.findOne({ id: req.body.id })
       .then((agent) => {
-        agent.assignedChats = [...agent.assignedChats, req.params.id];
-        agent
-          .save()
-          .then(() => res.json("Chat assigned!"))
+        if (agent.assignedChats.includes(req.params.id))
+          return res.json("already assigned");
+
+        const newAssignedChats = [...agent.assignedChats, req.params.id];
+
+        Agent.findOneAndUpdate(
+          { id: req.body.id },
+          { assignedChats: newAssignedChats },
+          { returnOriginal: true }
+        )
+          .then(() => res.json("assigned"))
           .catch((err) => res.status(400).json("Error: " + err));
       })
       .catch((err) => res.status(400).json("Error: " + err));

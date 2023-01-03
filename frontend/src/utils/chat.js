@@ -57,7 +57,7 @@ export const assignChatToMe = async (id, agentId) => {
     };
 
     const response = await axios
-      .post(API_URL + "/chats/update/" + id, reqObj)
+      .post(API_URL + "/chats/assign/" + id, reqObj)
       .then(function (response) {
         console.log(response);
         return response.data;
