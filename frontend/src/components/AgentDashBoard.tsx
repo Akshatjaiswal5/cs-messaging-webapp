@@ -12,7 +12,7 @@ const AgentDashBoard = (props) => {
   console.log(selectedUser);
   useEffect(() => {
     loadChats();
-  }, []);
+  }, [selectedUser]);
 
   function logoutFromUser() {
     setSelectedUser(null);
@@ -26,7 +26,6 @@ const AgentDashBoard = (props) => {
     const msgs = await getAllMessages();
     setAllMessages(msgs);
   }
-  console.log("allc:", allChats);
   return (
     <div className="agent-dashboard">
       <div className="user-requests">
