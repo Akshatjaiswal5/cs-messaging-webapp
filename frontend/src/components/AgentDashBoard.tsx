@@ -89,7 +89,7 @@ const AgentDashBoard = (props) => {
               setSelectedUser(user);
             }}
           >
-            {assigned ? (mine ? "Go to" : "Assigned to others") : "Assign me"}
+            {assigned ? (mine ? "Go to" : "Assigned ") : "Assign me"}
           </button>
         </div>
       </div>
