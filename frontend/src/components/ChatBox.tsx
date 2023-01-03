@@ -1,10 +1,8 @@
-require("dotenv").config();
 import { useEffect, useState } from "react";
 import { sendMessage, getAllMessagesById } from "../utils/chat";
 import { loginWithUser } from "../utils/user";
 import io from "socket.io-client";
-
-var API_URL = process.env.API || "http://127.0.0.1:5000";
+import { API_URL } from "../../api";
 
 var socket;
 
