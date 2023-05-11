@@ -1,5 +1,4 @@
 # cs-messaging-webapp
-# Branch International Internship Assignment
 
 ### Done
 ✅ API to handle incoming & outgoing messages for multiple customers & support agents
